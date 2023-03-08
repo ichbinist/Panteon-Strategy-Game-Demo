@@ -8,8 +8,6 @@ public class Singleton<T> : MonoBehaviour where T : Object
 
     private static T instance;
 
-    private bool m_IsInitialized;
-
     #endregion
 
     #region Properties
