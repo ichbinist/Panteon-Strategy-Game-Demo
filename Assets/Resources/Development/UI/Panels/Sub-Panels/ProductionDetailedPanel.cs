@@ -7,7 +7,7 @@ using Sirenix.OdinInspector;
 ///->Usage of ProductionDetailedPanel script: Handles the Changing data on UI when selected any detailed object (Barracks or Units)
 ///ENDINFO
 
-public class ProductionDetailedPanel : BasePanel
+public class ProductionDetailedPanel : SubBasePanel
 {
 #region Publics
 

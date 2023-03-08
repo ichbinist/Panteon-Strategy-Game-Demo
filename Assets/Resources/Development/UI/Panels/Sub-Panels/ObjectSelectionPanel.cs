@@ -7,7 +7,7 @@ using Sirenix.OdinInspector;
 ///->Usage of ObjectSelectionPanel script: Handles the Opening and Closing actions of Detailed and Non-Detailed panels when selected objects (Buildings or Units)
 ///ENDINFO
 
-public class ObjectSelectionPanel : BasePanel
+public class ObjectSelectionPanel : SubBasePanel
 {
 #region Publics
 

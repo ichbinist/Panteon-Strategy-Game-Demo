@@ -4,10 +4,10 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 
 ///INFO
-///->Usage of NonDetailedPanel script: Handles the Changing data on UI when selected any non detailed object (Power Plant)
+///->Usage of SubBasePanel script: 
 ///ENDINFO
 
-public class NonDetailedPanel : SubBasePanel
+public class SubBasePanel : BasePanel
 {
 #region Publics
 

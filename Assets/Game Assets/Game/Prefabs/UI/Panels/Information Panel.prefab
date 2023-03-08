@@ -461,6 +461,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Object Selection Panel
       objectReference: {fileID: 0}
+    - target: {fileID: 9143039636817236443, guid: 9dcb69be19bf5594bae0d9eb0c790b0e, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9143039636817236443, guid: 9dcb69be19bf5594bae0d9eb0c790b0e, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9dcb69be19bf5594bae0d9eb0c790b0e, type: 3}
 --- !u!1001 &6283328651437340157

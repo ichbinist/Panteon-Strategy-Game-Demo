@@ -338,6 +338,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Main Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 2485992145098855908, guid: 34aba37f7e7e59642989a90f9228bbbe, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2860399083055562148, guid: 34aba37f7e7e59642989a90f9228bbbe, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
