@@ -4,7 +4,7 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 
 ///INFO
-///->Usage of BuildingProductionHandler script: 
+///->Usage of BuildingProductionHandler script: Handles the selection of which building will be produced.
 ///ENDINFO
 
 public class BuildingProductionHandler : BaseInteractable

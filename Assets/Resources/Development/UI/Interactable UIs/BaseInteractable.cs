@@ -5,13 +5,15 @@ using Sirenix.OdinInspector;
 using System;
 
 ///INFO
-///->Usage of BaseInteractable script: 
+///->Usage of BaseInteractable script: Base script for Interactable UIs' (BuildingProductionHandler and UnitProductionHandler). Contains Interactable UIs' General Functions like Activation and Deactivation.
 ///ENDINFO
 
 public class BaseInteractable : MonoBehaviour
 {
     #region Publics
+    [FoldoutGroup("Interactable References")]
     public GameObject Elements;
+    [FoldoutGroup("Interactable Settings")]
     public InteractableState CurrentInteractableState;
     #endregion
 

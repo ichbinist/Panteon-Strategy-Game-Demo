@@ -34,3 +34,8 @@ public class UnitManager : Singleton<UnitManager>
 
 #endregion
 }
+[System.Serializable]
+public class Unit
+{
+
+}

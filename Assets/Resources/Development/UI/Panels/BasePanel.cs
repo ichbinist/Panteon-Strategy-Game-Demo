@@ -11,7 +11,9 @@ using System;
 public abstract class BasePanel : MonoBehaviour
 {
     #region Publics
+    [FoldoutGroup("Panel References")]
     public GameObject Elements;
+    [FoldoutGroup("Panel Settings")]
     public PanelState CurrentPanelState;
     #endregion
 

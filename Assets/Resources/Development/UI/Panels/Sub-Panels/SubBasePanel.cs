@@ -4,7 +4,7 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 
 ///INFO
-///->Usage of SubBasePanel script: 
+///->Usage of SubBasePanel script: Base Panel for Sub-Panels. Contains general functions and logic for Sub-Panels.
 ///ENDINFO
 
 public class SubBasePanel : BasePanel

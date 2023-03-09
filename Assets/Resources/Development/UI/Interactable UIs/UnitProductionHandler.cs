@@ -5,7 +5,7 @@ using Sirenix.OdinInspector;
 using System;
 
 ///INFO
-///->Usage of UnitProductionHandler script: 
+///->Usage of UnitProductionHandler script: Handles the selection of which unit will be produced.
 ///ENDINFO
 
 public class UnitProductionHandler : BaseInteractable

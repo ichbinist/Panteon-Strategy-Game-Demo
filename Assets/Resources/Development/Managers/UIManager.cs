@@ -10,11 +10,14 @@ using Sirenix.OdinInspector;
 public class UIManager : Singleton<UIManager>
 {
     #region Publics
-    private List<BasePanel> panels = new List<BasePanel>();
+    [ShowInInspector]
+    [HideLabel]
+    [FoldoutGroup("Cached Panels")]
+    public List<BasePanel> GetPanels { get { return (panels); } }
     #endregion
 
     #region Privates
-
+    private List<BasePanel> panels = new List<BasePanel>();
     #endregion
 
     #region Cached
@@ -30,21 +33,16 @@ public class UIManager : Singleton<UIManager>
     #endregion
 
     #region Functions
-    public List<BasePanel> GetPanels()
-    {
-        return panels;
-    }
-
     public void AddPanel(BasePanel panel)
     {
-        if(!GetPanels().Contains(panel))
-            GetPanels().Add(panel);
+        if(!GetPanels.Contains(panel))
+            panels.Add(panel);
     }
 
     public void RemovePanel(BasePanel panel)
     {
-        if (GetPanels().Contains(panel))
-            GetPanels().Remove(panel);
+        if (GetPanels.Contains(panel))
+            panels.Remove(panel);
     }
     #endregion
 

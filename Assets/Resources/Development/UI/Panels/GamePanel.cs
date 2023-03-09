@@ -4,7 +4,7 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 
 ///INFO
-///->Usage of GamePanel script: 
+///->Usage of GamePanel script: Contains the functions for Showing the Building Indicator that follows mouse and a-like In-game Data.
 ///ENDINFO
 
 public class GamePanel : BasePanel
