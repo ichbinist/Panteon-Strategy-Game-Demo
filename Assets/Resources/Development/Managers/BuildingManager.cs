@@ -18,6 +18,7 @@ public class BuildingManager : Singleton<BuildingManager>
 
     [FoldoutGroup("Produced Building List")]
     [HideLabel]
+    [ReadOnly]
     public List<Building> ProducedBuildings = new List<Building>();
 
     public List<Building> GetPlayerBuildings { get { return (ProducedBuildings.FindAll(x => x.BuildingAffinityType == BuildingAffinityType.Player)); } }
@@ -73,14 +74,27 @@ public class Building
     [FoldoutGroup("Building Settings")]
     [ShowIf("IsDetailedInfoBuilding")]
     public List<Unit> ProduceableUnits = new List<Unit>();
+    [FoldoutGroup("Building Settings")]
+    public int Health;
 
     [FoldoutGroup("Building References")]
     public GameObject BuildingPrefab;
 
     [HideInInspector]
     public bool isDetailedInfoBuilding { get { return (BuildingInfoType == BuildingInfoType.Detailed) ? true : false; } }
+    #endregion
 
-    public Building(BuildingInfoType buildingInfoType, BuildingAffinityType buildingAffinityType, Vector2 buildingSize, string buildingName, Sprite buildingImage, List<Unit> produceableUnits = null, GameObject buildingPrefab = null)
+    #region Events
+    public Action<int> OnDamageTaken;
+    public Action OnDestroyed;
+    #endregion
+
+    #region Privates
+
+    #endregion
+
+    #region Functions
+    public Building(BuildingInfoType buildingInfoType, BuildingAffinityType buildingAffinityType, Vector2 buildingSize, string buildingName, Sprite buildingImage, int health, List<Unit> produceableUnits = null, GameObject buildingPrefab = null)
     {
         BuildingInfoType = buildingInfoType;
         BuildingAffinityType = buildingAffinityType;
@@ -89,11 +103,19 @@ public class Building
         BuildingImage = buildingImage;
         ProduceableUnits = produceableUnits;
         BuildingPrefab = buildingPrefab;
+        Health = health;
     }
-    #endregion
 
-    #region Privates
+    public void GetDamage(int damage)
+    {
+        Health -= damage;
+        OnDamageTaken.Invoke(damage);
 
+        if(Health <= 0)
+        {
+            OnDestroyed.Invoke();
+        }
+    }
     #endregion
 }
 

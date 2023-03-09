@@ -13,6 +13,7 @@ public class UIManager : Singleton<UIManager>
     [ShowInInspector]
     [HideLabel]
     [FoldoutGroup("Cached Panels")]
+    [ReadOnly]
     public List<BasePanel> GetPanels { get { return (panels); } }
     #endregion
 
