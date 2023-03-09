@@ -203,7 +203,7 @@ GameObject:
   - component: {fileID: 3683261650709073593}
   - component: {fileID: 746313704819602448}
   m_Layer: 0
-  m_Name: Unit Production
+  m_Name: Unit Production Interactable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
