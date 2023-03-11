@@ -266,6 +266,8 @@ MonoBehaviour:
   Elements: {fileID: 1959857627277820016}
   CurrentInteractableState: 0
   Unit: {fileID: 0}
+  UnitName: {fileID: 4724852703440158202}
+  UnitImage: {fileID: 7444981730122570786}
 --- !u!114 &9026635347186880213
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -421,8 +423,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 5}
+  m_SizeDelta: {x: 0, y: -10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4810514895857093263
 CanvasRenderer:
@@ -495,7 +497,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 0
+  m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}

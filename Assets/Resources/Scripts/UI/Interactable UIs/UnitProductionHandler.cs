@@ -14,6 +14,10 @@ public class UnitProductionHandler : BaseInteractable
     #region Publics
     [FoldoutGroup("Handler Settings")]
     public Unit Unit;
+    [FoldoutGroup("Handler Settings")]
+    public TMPro.TextMeshProUGUI UnitName;
+    [FoldoutGroup("Handler Settings")]
+    public Image UnitImage;
     #endregion
 
     #region Privates
@@ -32,6 +36,7 @@ public class UnitProductionHandler : BaseInteractable
     #region Monobehaviours
     private void OnEnable()
     {
+        InitializeHandler();
         InteractionButton.onClick.AddListener(OnClick);
     }
 
@@ -42,6 +47,13 @@ public class UnitProductionHandler : BaseInteractable
     #endregion
 
     #region Functions
+
+    private void InitializeHandler()
+    {
+        UnitName.SetText(Unit.UnitName);
+        UnitImage.sprite = Unit.UnitImage;
+    }
+
     private void OnClick()
     {
         UnitManager.Instance.LastProducedUnit = Unit;

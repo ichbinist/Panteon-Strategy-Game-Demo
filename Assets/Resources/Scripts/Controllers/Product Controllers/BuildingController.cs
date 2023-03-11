@@ -7,7 +7,7 @@ using Sirenix.OdinInspector;
 ///->Usage of BuildingController script: 
 ///ENDINFO
 
-public class BuildingController : MonoBehaviour
+public class BuildingController : MonoBehaviour, ISlotable
 {
     #region Publics
     public Building Building;
@@ -100,6 +100,11 @@ public class BuildingController : MonoBehaviour
         Building = null;
         SpriteRenderer.sprite = null;
         localHealth = 0;
+    }
+
+    public void GetDamage()
+    {
+        
     }
     #endregion
 

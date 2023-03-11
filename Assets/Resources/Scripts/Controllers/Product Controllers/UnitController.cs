@@ -7,7 +7,7 @@ using Sirenix.OdinInspector;
 ///->Usage of UnitController script: 
 ///ENDINFO
 
-public class UnitController : MonoBehaviour
+public class UnitController : MonoBehaviour, ISlotable
 {
     #region Publics
     [FoldoutGroup("Data")]
@@ -98,6 +98,11 @@ public class UnitController : MonoBehaviour
         Unit = null;
         SpriteRenderer.sprite = null;
         localHealth = 0;
+    }
+
+    public void GetDamage()
+    {
+        
     }
     #endregion
 }

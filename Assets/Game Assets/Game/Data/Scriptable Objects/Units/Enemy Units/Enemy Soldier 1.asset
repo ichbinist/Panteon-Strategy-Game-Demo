@@ -15,8 +15,7 @@ MonoBehaviour:
   UnitCombatType: 0
   UnitAffinityType: 1
   UnitSize: {x: 1, y: 1}
-  UnitName: Soldier 1
+  UnitName: Enemy Soldier 1
   UnitImage: {fileID: 21300000, guid: 4eecf5868141c174a9e88170d8cb5586, type: 3}
   Health: 10
   Damage: 10
-  UnitPrefab: {fileID: 0}
