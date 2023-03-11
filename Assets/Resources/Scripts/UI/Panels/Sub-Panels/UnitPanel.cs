@@ -4,10 +4,10 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 
 ///INFO
-///->Usage of ProductionDetailedPanel script: Handles the Changing data on UI when selected any detailed object (Barracks)
+///->Usage of UnitPanel script: Handles the changing of Data that shown on UI when clicked on any Unit;
 ///ENDINFO
 
-public class ProductionDetailedPanel : SubBasePanel
+public class UnitPanel : SubBasePanel
 {
 #region Publics
 
