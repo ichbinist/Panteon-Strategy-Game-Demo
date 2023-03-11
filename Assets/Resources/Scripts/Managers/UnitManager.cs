@@ -24,6 +24,10 @@ public class UnitManager : Singleton<UnitManager>
 
     public List<Unit> GetPlayerUnits { get { return (ProducedUnits.FindAll(x => x.UnitAffinityType == UnitAffinityType.Player)); } }
     public List<Unit> GetEnemyUnits { get { return (ProducedUnits.FindAll(x => x.UnitAffinityType == UnitAffinityType.Enemy)); } }
+
+    [FoldoutGroup("Config")]
+    [ReadOnly]
+    public Unit LastProducedUnit;
     #endregion
 
     #region Privates

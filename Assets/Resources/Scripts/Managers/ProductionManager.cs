@@ -11,6 +11,7 @@ using System;
 public class ProductionManager : Singleton<ProductionManager>
 {
     #region Publics
+    [ReadOnly]
     public ProductionDictionary ProductionDictionary;
     #endregion
 

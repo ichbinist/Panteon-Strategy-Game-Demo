@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using System.Linq;
+using System;
 
 ///INFO
 ///->Usage of PoolingManager script: When initialized, creates multiple object pools by instantiating them, enables and disables them, resets them and reuses them when needed, basicly pooling system.
@@ -11,7 +12,9 @@ using System.Linq;
 public class PoolingManager : Singleton<PoolingManager>
 {
     #region Publics
-    public List<Pool> Pools = new List<Pool>();
+    [ReadOnly]
+    public PoolDictionary PoolDictionary = new PoolDictionary();
+    public int DefaultObjectPoolSize = 15;
     #endregion
 
     #region Privates
@@ -23,10 +26,13 @@ public class PoolingManager : Singleton<PoolingManager>
     #endregion
 
     #region Events
-
+    public Action<GameObject> OnObjectRecycled;
+    public Action<GameObject> OnObjectReturned;
+    public Action<GameObject> OnObjectProduced;
     #endregion
 
     #region Monobehaviours
+    [Button]
     private void OnEnable()
     {
         InitializePools();
@@ -36,10 +42,20 @@ public class PoolingManager : Singleton<PoolingManager>
     #region Functions
     private void InitializePools()
     {
-        foreach (Pool pool in Pools)
+        foreach (ProductionType productionType in Enum.GetValues(typeof(ProductionType)))
         {
-            pool.InitializePool();
+            PoolDictionary.Add(productionType, new Pool(productionType, DefaultObjectPoolSize));
         }
+    }
+
+    public GameObject GetObjectFromPool(ProductionType productionType)
+    {
+        return PoolDictionary[productionType].GetPoolObject();
+    }
+
+    public void ReturnObjectToPool(ProductionType productionType, GameObject inUsePoolObject)
+    {
+        PoolDictionary[productionType].ReturnPoolObject(inUsePoolObject);
     }
     #endregion
 }
@@ -47,14 +63,21 @@ public class PoolingManager : Singleton<PoolingManager>
 public class Pool
 {
     public ProductionType ProductionType;
-    public int DefaultPoolObjectCount = 10;
+    public int DefaultPoolObjectCount;
     [FoldoutGroup("Pool Objects")]
     [ReadOnly]
     public List<GameObject> InUsePoolObjects;
     [FoldoutGroup("Pool Objects")]
     [ReadOnly]
-    public List<GameObject> AvailablePoolObjects;
+    public List<GameObject> AvailablePoolObjects = new List<GameObject>();
     public bool IsPoolObjectAvailable { get { return (AvailablePoolObjects.Count > 0) ? true : false; } }
+
+    internal Pool(ProductionType productionType, int defaultPoolObjectCount)
+    {
+        ProductionType = productionType;
+        DefaultPoolObjectCount = defaultPoolObjectCount;
+        InitializePool();
+    }
 
     internal void InitializePool()
     {
@@ -77,7 +100,8 @@ public class Pool
                 AvailablePoolObjects.Remove(cachedPoolObject);
                 InUsePoolObjects.Add(cachedPoolObject);
                 cachedPoolObject.SetActive(true);
-                //Reset Object
+                //Reset and Initialize
+                PoolingManager.Instance.OnObjectRecycled.Invoke(cachedPoolObject);
                 return cachedPoolObject;
             }
             else
@@ -90,7 +114,8 @@ public class Pool
             GameObject producedPoolObject = ProductionManager.Instance.GetProduct(ProductionType);
             InUsePoolObjects.Add(producedPoolObject);
             producedPoolObject.SetActive(true);
-            //Reset Object
+            //Initialize
+            PoolingManager.Instance.OnObjectProduced.Invoke(producedPoolObject);
             return producedPoolObject;
         }
     }
@@ -102,8 +127,11 @@ public class Pool
         {
             InUsePoolObjects.Remove(inUsePoolObject);
             AvailablePoolObjects.Add(inUsePoolObject);
+            PoolingManager.Instance.OnObjectReturned.Invoke(inUsePoolObject);
             inUsePoolObject.SetActive(false);
             //Reset Object
         }
     }
 }
+[Serializable]
+public class PoolDictionary : Dictionary<ProductionType, Pool> { }
