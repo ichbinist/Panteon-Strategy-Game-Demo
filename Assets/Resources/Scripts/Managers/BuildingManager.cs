@@ -23,6 +23,10 @@ public class BuildingManager : Singleton<BuildingManager>
 
     public List<Building> GetPlayerBuildings { get { return (ProducedBuildings.FindAll(x => x.BuildingAffinityType == BuildingAffinityType.Player)); } }
     public List<Building> GetEnemyBuildings { get { return (ProducedBuildings.FindAll(x => x.BuildingAffinityType == BuildingAffinityType.Enemy)); } }
+
+    [FoldoutGroup("Config")]
+    [ReadOnly]
+    public Building LastProducedBuilding;
     #endregion
 
     #region Privates

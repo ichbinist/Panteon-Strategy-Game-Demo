@@ -66,7 +66,7 @@ public class Pool
     public int DefaultPoolObjectCount;
     [FoldoutGroup("Pool Objects")]
     [ReadOnly]
-    public List<GameObject> InUsePoolObjects;
+    public List<GameObject> InUsePoolObjects = new List<GameObject>();
     [FoldoutGroup("Pool Objects")]
     [ReadOnly]
     public List<GameObject> AvailablePoolObjects = new List<GameObject>();

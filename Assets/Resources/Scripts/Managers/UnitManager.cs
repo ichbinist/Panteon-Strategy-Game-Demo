@@ -48,7 +48,17 @@ public class UnitManager : Singleton<UnitManager>
     #endregion
 
     #region Functions
+    public void AddUnit(Unit unit)
+    {
+        ProducedUnits.Add(unit);
+        OnUnitAdded.Invoke(unit.UnitAffinityType);
+    }
 
+    public void RemoveUnit(Unit unit)
+    {
+        OnUnitRemoved.Invoke(unit.UnitAffinityType);
+        ProducedUnits.Remove(unit);
+    }
     #endregion
-    
+
 }
