@@ -38,7 +38,8 @@ public abstract class BasePanel : MonoBehaviour
 
     private void OnDestroy()
     {
-        UIManager.Instance.RemovePanel(this);
+        if (UIManager.Instance)
+            UIManager.Instance.RemovePanel(this);
     }
 
     protected virtual void OnEnable()
@@ -48,7 +49,8 @@ public abstract class BasePanel : MonoBehaviour
 
     protected virtual void OnDisable()
     {
-        UIManager.Instance.RemovePanel(this);
+        if(UIManager.Instance)
+            UIManager.Instance.RemovePanel(this);
     }
     #endregion
 

@@ -9,28 +9,27 @@ using Sirenix.OdinInspector;
 
 public class BuildingProductionHandler : BaseInteractable
 {
-#region Publics
+    #region Publics
 
-#endregion
+    #endregion
 
-#region Privates
+    #region Privates
 
-#endregion
+    #endregion
 
-#region Cached
+    #region Cached
 
-#endregion
+    #endregion
 
-#region Events
+    #region Events
 
-#endregion
+    #endregion
 
-#region Monobehaviours
+    #region Monobehaviours
 
-#endregion
+    #endregion
 
-#region Functions
+    #region Functions
 
-#endregion
-
+    #endregion
 }

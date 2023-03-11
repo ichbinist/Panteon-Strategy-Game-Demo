@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1058632373293252099
+--- !u!1 &820172525303454186
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5661470367679736021}
-  - component: {fileID: 3476532700189049357}
+  - component: {fileID: 184109176245670066}
+  - component: {fileID: 6651266842713326059}
   m_Layer: 0
-  m_Name: Building Manager
+  m_Name: Unit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5661470367679736021
+--- !u!4 &184109176245670066
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1058632373293252099}
+  m_GameObject: {fileID: 820172525303454186}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -32,21 +32,16 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3476532700189049357
+--- !u!114 &6651266842713326059
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1058632373293252099}
+  m_GameObject: {fileID: 820172525303454186}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d0b04c0d5d9c774781dd203d7c817ea, type: 3}
+  m_Script: {fileID: 11500000, guid: cdb9cc8f31352694397ead58ca753571, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ProduceableBuildings:
-  - {fileID: 11400000, guid: a355f2960e095e244b31185377be22e7, type: 2}
-  - {fileID: 11400000, guid: 912626e271283194d9ab3fa0ebc8a920, type: 2}
-  - {fileID: 11400000, guid: 54bd406bc0256bb4e89d72809b25f24a, type: 2}
-  - {fileID: 11400000, guid: f3686966c16af9a4db077f2fbea50f38, type: 2}
-  ProducedBuildings: []
+  Unit: {fileID: 0}
