@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c57b3ef5d4a11514e911b649858be07f, type: 3}
+  m_Name: Player Barracks
+  m_EditorClassIdentifier: 
+  BuildingInfoType: 0
+  BuildingAffinityType: 0
+  BuildingSize: {x: 4, y: 4}
+  BuildingName: Barracks
+  BuildingImage: {fileID: 21300000, guid: 113f3fd0c6e253943abcbff3191eece5, type: 3}
+  ProduceableUnits:
+  - {fileID: 11400000, guid: 500c9ec10942ddd4b9bdbe8ffcd90d9c, type: 2}
+  - {fileID: 11400000, guid: 5d912f3ccd2c59648ad5d09b6a539768, type: 2}
+  - {fileID: 11400000, guid: 6b1b0dc6ba07dfa408c007313bb17b8c, type: 2}
+  Health: 100

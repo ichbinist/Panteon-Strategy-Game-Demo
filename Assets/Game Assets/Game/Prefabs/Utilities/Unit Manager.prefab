@@ -44,3 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5ada5aadd0a3f4992d65e8ec0310f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ProduceableUnits:
+  - {fileID: 11400000, guid: 500c9ec10942ddd4b9bdbe8ffcd90d9c, type: 2}
+  - {fileID: 11400000, guid: 5d912f3ccd2c59648ad5d09b6a539768, type: 2}
+  - {fileID: 11400000, guid: 6b1b0dc6ba07dfa408c007313bb17b8c, type: 2}
+  - {fileID: 11400000, guid: 00a1e1dc42aefde46acb3a1307fd2809, type: 2}
+  - {fileID: 11400000, guid: d4cfbc2aeea20a0418238ce32dfd8142, type: 2}
+  - {fileID: 11400000, guid: 4a253a9b6c72a1d429fb1b2f6527946c, type: 2}
+  ProducedUnits: []
