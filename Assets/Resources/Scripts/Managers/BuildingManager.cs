@@ -43,7 +43,16 @@ public class BuildingManager : Singleton<BuildingManager>
     #endregion
 
     #region Monobehaviours
+    private void OnDrawGizmos()
+    {
+        if (GridManager.Instance.Grid == null) return;
 
+        Gizmos.color = Color.red;
+        foreach (Systems.Grid.Cell cell in GridManager.Instance.Grid.Cells)
+        {
+            Gizmos.DrawWireSphere(cell.CellPosition, UnitConversions.UnityLengthToPixel(cell.CellSize));
+        }
+    }
     #endregion
 
     #region Functions

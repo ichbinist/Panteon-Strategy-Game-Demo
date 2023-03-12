@@ -31,7 +31,7 @@ public class GridManager : Singleton<GridManager>
     private void Start()
     {
         CreateGrid();
-        GridRenderer.DrawGrid(Grid.grid);
+        GridRenderer.DrawGrid(Grid.Cells);
     }
     #endregion
 

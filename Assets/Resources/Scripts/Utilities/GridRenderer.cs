@@ -25,6 +25,8 @@ public class GridRenderer : MonoBehaviour
         gridSizeX = GridManager.Instance.Grid.GridSizeX;
         gridSizeY = GridManager.Instance.Grid.GridSizeY;
 
+        transform.position = new Vector3(UnitConversions.UnityLengthToPixel(gridSizeX / 2 * cellSize), UnitConversions.UnityLengthToPixel(gridSizeY / 2 * cellSize));
+
         cellTexture = new Texture2D(1, 1);
         cellTexture.SetPixel(0, 0, CellColor);
         cellTexture.Apply();

@@ -55,7 +55,7 @@ public class BuildingProductionHandler : BaseInteractable
     private void OnClick()
     {
         BuildingManager.Instance.LastProducedBuilding = Building;
-        PoolingManager.Instance.GetObjectFromPool(ProductionType.Building);
+        //PoolingManager.Instance.GetObjectFromPool(ProductionType.Building);
     }
     #endregion
 

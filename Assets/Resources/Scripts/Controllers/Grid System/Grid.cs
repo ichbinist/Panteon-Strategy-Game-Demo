@@ -16,7 +16,7 @@ namespace Systems.Grid
         public float CellSize;
         [ShowInInspector]
         [ReadOnly]
-        public List<Cell> grid = new List<Cell>();
+        public List<Cell> Cells = new List<Cell>();
     
         public void GenerateGrid()
         {
@@ -28,14 +28,20 @@ namespace Systems.Grid
                     Cell cell = new Cell();
                     cell.CellPosition = cellPosition;
                     cell.CellSize = CellSize;
-                    grid.Add(cell);
+                    Cells.Add(cell);
                 }
             }
 
-            foreach (Cell cell in grid)
+            foreach (Cell cell in Cells)
             {
-                cell.InitializeNeighbors(grid);
+                cell.InitializeNeighbors(Cells);
             }
+        }
+
+        public Cell GetCellByPosition(Vector2 position)
+        {
+            //position += new Vector2(UnitConversions.UnityLengthToPixel(GridSizeX / 10 * CellSize) + UnitConversions.UnityLengthToPixel(GridSizeX / 30 * CellSize), UnitConversions.UnityLengthToPixel(GridSizeY / 10 * CellSize));
+            return Cells.Find(x => Vector2.Distance(x.CellPosition, position) < UnitConversions.UnityLengthToPixel(CellSize));
         }
     }
 }
