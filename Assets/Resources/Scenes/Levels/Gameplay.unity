@@ -123,6 +123,17 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &630444842 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2876090354541186077, guid: 914e6301252ed7c4aa937952ff3fc17e, type: 3}
+  m_PrefabInstance: {fileID: 5651313493781760993}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17e71df0d1de0cf4a96db1355bf3c164, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5651313493781760993
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -130,6 +141,42 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2876090354541186077, guid: 914e6301252ed7c4aa937952ff3fc17e, type: 3}
+      propertyPath: FalsePlacementColor.a
+      value: 0.39215687
+      objectReference: {fileID: 0}
+    - target: {fileID: 2876090354541186077, guid: 914e6301252ed7c4aa937952ff3fc17e, type: 3}
+      propertyPath: FalsePlacementColor.b
+      value: 0.52673995
+      objectReference: {fileID: 0}
+    - target: {fileID: 2876090354541186077, guid: 914e6301252ed7c4aa937952ff3fc17e, type: 3}
+      propertyPath: FalsePlacementColor.g
+      value: 0.49411762
+      objectReference: {fileID: 0}
+    - target: {fileID: 2876090354541186077, guid: 914e6301252ed7c4aa937952ff3fc17e, type: 3}
+      propertyPath: FalsePlacementColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2876090354541186077, guid: 914e6301252ed7c4aa937952ff3fc17e, type: 3}
+      propertyPath: CorrectPlacementColor.a
+      value: 0.39215687
+      objectReference: {fileID: 0}
+    - target: {fileID: 2876090354541186077, guid: 914e6301252ed7c4aa937952ff3fc17e, type: 3}
+      propertyPath: CorrectPlacementColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2876090354541186077, guid: 914e6301252ed7c4aa937952ff3fc17e, type: 3}
+      propertyPath: CorrectPlacementColor.g
+      value: 0.49411765
+      objectReference: {fileID: 0}
+    - target: {fileID: 2876090354541186077, guid: 914e6301252ed7c4aa937952ff3fc17e, type: 3}
+      propertyPath: CorrectPlacementColor.r
+      value: 0.53333336
+      objectReference: {fileID: 0}
+    - target: {fileID: 4054828081858137167, guid: 914e6301252ed7c4aa937952ff3fc17e, type: 3}
+      propertyPath: WorldObjectMouseFollow
+      value: 
+      objectReference: {fileID: 630444842}
     - target: {fileID: 5651313494022281601, guid: 914e6301252ed7c4aa937952ff3fc17e, type: 3}
       propertyPath: m_RootOrder
       value: 0

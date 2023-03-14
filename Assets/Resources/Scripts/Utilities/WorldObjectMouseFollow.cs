@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
+using Systems.Grid;
 
 ///INFO
 ///->Usage of WorldObjectMouseFollow script: 
@@ -10,11 +11,14 @@ using Sirenix.OdinInspector;
 public class WorldObjectMouseFollow : MonoBehaviour
 {
     #region Publics
+    public Cell TargetCell;
+    public float UpdateDensity = 0.05f;
 
+    public Color CorrectPlacementColor, FalsePlacementColor;
     #endregion
 
     #region Privates
-
+    private float timer = 0;
     #endregion
 
     #region Cached
@@ -28,12 +32,20 @@ public class WorldObjectMouseFollow : MonoBehaviour
     #region Monobehaviours
     private void Update()
     {
-        transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition)+Vector3.forward;
+        timer += Time.fixedDeltaTime;
+        if(timer> UpdateDensity)
+        {
+            timer = 0;
+            TargetCell = GridManager.Instance.Grid.GetCellByPosition(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+        }
+        if (TargetCell != null)
+        {
+            transform.position = TargetCell.CellPosition;
+        }
     }
     #endregion
 
     #region Functions
 
     #endregion
-
 }
