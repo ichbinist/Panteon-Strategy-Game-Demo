@@ -10,7 +10,6 @@ using Systems.Grid;
 public class BuildingProductionLogicHandler : MonoBehaviour
 {
     #region Publics
-    public ClickLogicHandler ClickLogicHandler;
     public SpriteRenderer SpriteRenderer;
     public GameObject BuildingIndicator;
     public WorldObjectMouseFollow WorldObjectMouseFollow;
@@ -31,12 +30,13 @@ public class BuildingProductionLogicHandler : MonoBehaviour
     #region Monobehaviours
     private void OnEnable()
     {
-        ClickLogicHandler.OnClickWorld.AddListener(OnClickHandler);
+        ClickManager.Instance.OnClickWorld.AddListener(OnClickHandler);
     }
 
     private void OnDisable()
     {
-        ClickLogicHandler.OnClickWorld.RemoveListener(OnClickHandler);
+        if(ClickManager.Instance)
+            ClickManager.Instance.OnClickWorld.RemoveListener(OnClickHandler);
     }
 
     private void Update()
@@ -132,7 +132,7 @@ public class BuildingProductionLogicHandler : MonoBehaviour
     private void PlaceBuilding(Systems.Grid.Cell placementCellStart)
     {
         GameObject placementBuilding = PoolingManager.Instance.GetObjectFromPool(ProductionType.Building);
-        placementBuilding.transform.position = placementCellStart.CellPosition; //Geçici
+        placementBuilding.transform.position = placementCellStart.CellPosition;
     }
     #endregion
 

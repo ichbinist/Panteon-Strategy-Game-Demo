@@ -9,5 +9,5 @@ using Sirenix.OdinInspector;
 
 public interface ISlotable
 {
-    public abstract void GetDamage();
+    public abstract void GetDamage(int damage);
 }

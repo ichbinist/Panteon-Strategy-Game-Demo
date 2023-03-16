@@ -9,28 +9,82 @@ using Sirenix.OdinInspector;
 
 public class ProductionDetailedPanel : SubBasePanel
 {
-#region Publics
+    #region Publics
+    [FoldoutGroup("Production Handlers")]
+    [ReadOnly]
+    public List<UnitProductionHandler> UnitProductionHandlers = new List<UnitProductionHandler>();
+    [FoldoutGroup("References")]
+    public UnitProductionHandler UnitProductionHandlerPrefab;
+    [FoldoutGroup("References")]
+    public Transform LayoutGrid;
+    #endregion
 
-#endregion
+    #region Privates
+    private Building localBuilding;
+    #endregion
 
-#region Privates
+    #region Cached
 
-#endregion
+    #endregion
 
-#region Cached
+    #region Events
 
-#endregion
+    #endregion
 
-#region Events
+    #region Monobehaviours
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        BuildingManager.Instance.OnBuildingSelected += InitializePanel;
+        if (BuildingManager.Instance.LastClickedBuildingController.Building.isDetailedInfoBuilding)
+        {
+            InitializePanel(BuildingManager.Instance.LastClickedBuildingController.Building);
+        }
+    }
 
-#endregion
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        if (BuildingManager.Instance)
+            BuildingManager.Instance.OnBuildingSelected -= InitializePanel;
+    }
+    #endregion
 
-#region Monobehaviours
+    #region Functions
+    private void InitializePanel(Building building)
+    {
+        if (building == null)
+        {
+            DeactivatePanel();
+            return;
+        }
 
-#endregion
+        if (building.BuildingInfoType == BuildingInfoType.Detailed)
+        {
+            ActivatePanel();
 
-#region Functions
+            localBuilding = building;
 
-#endregion
+            foreach (UnitProductionHandler child in UnitProductionHandlers)
+            {
+                Destroy(child.gameObject);
+            }
+
+            UnitProductionHandlers.Clear();
+
+            for (int i = 0; i < localBuilding.ProduceableUnits.Count; i++)
+            {
+                UnitProductionHandler localHandler = Instantiate(UnitProductionHandlerPrefab, LayoutGrid);
+                localHandler.InitializeHandler(localBuilding.ProduceableUnits[i]);
+                UnitProductionHandlers.Add(localHandler);
+            }
+        }
+        else
+        {
+            DeactivatePanel();
+        }
+
+    }
+    #endregion
 
 }

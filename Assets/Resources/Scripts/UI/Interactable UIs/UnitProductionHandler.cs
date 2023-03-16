@@ -36,7 +36,6 @@ public class UnitProductionHandler : BaseInteractable
     #region Monobehaviours
     private void OnEnable()
     {
-        InitializeHandler();
         InteractionButton.onClick.AddListener(OnClick);
     }
 
@@ -48,8 +47,9 @@ public class UnitProductionHandler : BaseInteractable
 
     #region Functions
 
-    private void InitializeHandler()
+    public void InitializeHandler(Unit unit)
     {
+        Unit = unit;
         UnitName.SetText(Unit.UnitName);
         UnitImage.sprite = Unit.UnitImage;
     }
@@ -57,7 +57,23 @@ public class UnitProductionHandler : BaseInteractable
     private void OnClick()
     {
         UnitManager.Instance.LastProducedUnit = Unit;
-        PoolingManager.Instance.GetObjectFromPool(ProductionType.Unit);
+        BuildingController buildingController = BuildingManager.Instance.LastClickedBuildingController;
+        Systems.Grid.Cell targetCell = buildingController.GetUnitProductionCell();
+        PlaceUnit(targetCell);
+    }
+
+    private void PlaceUnit(Systems.Grid.Cell targetCell)
+    {
+        if (targetCell.IsEmpty)
+        {
+            GameObject unitGameObject = PoolingManager.Instance.GetObjectFromPool(ProductionType.Unit);
+            unitGameObject.transform.position = targetCell.CellPosition;
+            UnitManager.Instance.AddUnit(Unit);
+        }
+        else
+        {
+            PlaceUnit(targetCell.Neighbors[UnityEngine.Random.Range(0,targetCell.Neighbors.Count-1)]);
+        }
     }
     #endregion
 

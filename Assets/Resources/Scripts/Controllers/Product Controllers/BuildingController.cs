@@ -26,6 +26,8 @@ public class BuildingController : MonoBehaviour, ISlotable
     [ShowInInspector]
     public List<Cell> AllocatedCells;
 
+    [FoldoutGroup("Building Settings")]
+    public Vector2 ProductionLocation;
     #endregion
 
     #region Privates
@@ -47,6 +49,8 @@ public class BuildingController : MonoBehaviour, ISlotable
         PoolingManager.Instance.OnObjectProduced += OnProduced;
         PoolingManager.Instance.OnObjectRecycled += OnRecycle;
         PoolingManager.Instance.OnObjectReturned += OnReturned;
+
+        ClickManager.Instance.OnClickWorld.AddListener(BuildingSelection);
     }
 
     private void OnDisable()
@@ -56,24 +60,28 @@ public class BuildingController : MonoBehaviour, ISlotable
             PoolingManager.Instance.OnObjectProduced -= OnProduced;
             PoolingManager.Instance.OnObjectRecycled -= OnRecycle;
             PoolingManager.Instance.OnObjectReturned -= OnReturned;
+
+            ClickManager.Instance.OnClickWorld.RemoveListener(BuildingSelection);
         }
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        if(AllocatedCells != null)
-        {
-            foreach (Cell cell in AllocatedCells)
-            {
-                Gizmos.DrawCube(cell.CellPosition, Vector3.one * 0.075f);
-            }
-        }
+#if UNITY_EDITOR
+        if(Application.isPlaying)
+            Gizmos.DrawSphere(GridManager.Instance.Grid.GetCellByPosition(AllocatedCells[0].CellPosition + ProductionLocation).CellPosition, 0.3f);
+#endif
     }
 
     #endregion
 
     #region Functions
+
+    public Cell GetUnitProductionCell()
+    {
+        return GridManager.Instance.Grid.GetCellByPosition(AllocatedCells[0].CellPosition + ProductionLocation);
+    }
 
     [Button]
     public void Death()
@@ -114,10 +122,6 @@ public class BuildingController : MonoBehaviour, ISlotable
         AllocatedCells = new List<Systems.Grid.Cell>();
 
         Cell searchingCell = GridManager.Instance.Grid.GetCellByPosition(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-
-        //searchingCell.SlottedObject = this;
-        //AllocatedCells.Add(searchingCell);
-
 
         for (int i = 0; i < BuildingManager.Instance.LastProducedBuilding.BuildingSize.x+1; i++)
         {
@@ -178,9 +182,27 @@ public class BuildingController : MonoBehaviour, ISlotable
         localHealth = 0;
     }
 
-    public void GetDamage()
+    public void GetDamage(int damage)
     {
         
+    }
+
+    public void BuildingSelection(Vector2 clickPosition, MouseClickType mouseClickType)
+    {
+        if (mouseClickType == MouseClickType.Left)
+        {
+            Cell clickedCell = GridManager.Instance.Grid.GetCellByPosition(Camera.main.ScreenToWorldPoint(clickPosition));
+            if(clickedCell == null)
+            {
+                BuildingManager.Instance.LastClickedBuildingController = null;
+                BuildingManager.Instance.OnBuildingSelected.Invoke(null);
+            }
+            else if (AllocatedCells.Contains(clickedCell))
+            {
+                BuildingManager.Instance.LastClickedBuildingController = this;
+                BuildingManager.Instance.OnBuildingSelected.Invoke(Building);
+            }
+        }
     }
     #endregion
 

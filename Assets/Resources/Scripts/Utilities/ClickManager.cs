@@ -10,7 +10,7 @@ using System;
 ///->Usage of ClickLogicHandler script: 
 ///ENDINFO
 
-public class ClickLogicHandler : MonoBehaviour
+public class ClickManager : Singleton<ClickManager>
 {
     #region Publics
     public bool IsMouseOverUI { get { return (EventSystem.current.IsPointerOverGameObject()); } }
