@@ -14,6 +14,10 @@ public class UnitProductionHandler : BaseInteractable
     #region Publics
     [FoldoutGroup("Handler Settings")]
     public Unit Unit;
+    [FoldoutGroup("Handler Settings")]
+    public TMPro.TextMeshProUGUI UnitName;
+    [FoldoutGroup("Handler Settings")]
+    public Image UnitImage;
     #endregion
 
     #region Privates
@@ -42,10 +46,34 @@ public class UnitProductionHandler : BaseInteractable
     #endregion
 
     #region Functions
+
+    public void InitializeHandler(Unit unit)
+    {
+        Unit = unit;
+        UnitName.SetText(Unit.UnitName);
+        UnitImage.sprite = Unit.UnitImage;
+    }
+
     private void OnClick()
     {
         UnitManager.Instance.LastProducedUnit = Unit;
-        PoolingManager.Instance.GetObjectFromPool(ProductionType.Unit);
+        BuildingController buildingController = BuildingManager.Instance.LastClickedBuildingController;
+        Systems.Grid.Cell targetCell = buildingController.GetUnitProductionCell();
+        PlaceUnit(targetCell);
+    }
+
+    private void PlaceUnit(Systems.Grid.Cell targetCell)
+    {
+        if (targetCell.IsEmpty)
+        {
+            GameObject unitGameObject = PoolingManager.Instance.GetObjectFromPool(ProductionType.Unit);
+            unitGameObject.transform.position = targetCell.CellPosition;
+            UnitManager.Instance.AddUnit(Unit);
+        }
+        else
+        {
+            PlaceUnit(targetCell.Neighbors[UnityEngine.Random.Range(0,targetCell.Neighbors.Count-1)]);
+        }
     }
     #endregion
 

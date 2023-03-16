@@ -84,6 +84,8 @@ MonoBehaviour:
   Elements: {fileID: 6716373682378625123}
   CurrentInteractableState: 0
   Building: {fileID: 0}
+  BuildingName: {fileID: 5948509856058094683}
+  BuildingImage: {fileID: 6209632506451070523}
 --- !u!114 &1403551816985233964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -221,7 +223,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18
+  m_fontSize: 23.45
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
-
+using Systems.Grid;
 ///INFO
 ///->Usage of GridManager script: Handles the Communication between Building Placement Controllers, Unit Controllers and UI.
 ///ENDINFO
@@ -10,7 +10,9 @@ using Sirenix.OdinInspector;
 public class GridManager : Singleton<GridManager>
 {
     #region Publics
-
+    [SerializeField]
+    public Systems.Grid.Grid Grid;
+    public GridRenderer GridRenderer;
     #endregion
 
     #region Privates
@@ -26,10 +28,17 @@ public class GridManager : Singleton<GridManager>
     #endregion
 
     #region Monobehaviours
-
+    private void Start()
+    {
+        CreateGrid();
+        GridRenderer.DrawGrid(Grid.Cells);
+    }
     #endregion
 
     #region Functions
-
+    public void CreateGrid()
+    {
+        Grid.GenerateGrid();
+    }
     #endregion
 }

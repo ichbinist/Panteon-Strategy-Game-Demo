@@ -13,6 +13,10 @@ public class BuildingProductionHandler : BaseInteractable
     #region Publics
     [FoldoutGroup("Handler Settings")]
     public Building Building;
+    [FoldoutGroup("Handler Settings")]
+    public TMPro.TextMeshProUGUI BuildingName;
+    [FoldoutGroup("Handler Settings")]
+    public Image BuildingImage;
     #endregion
 
     #region Privates
@@ -31,6 +35,7 @@ public class BuildingProductionHandler : BaseInteractable
     #region Monobehaviours
     private void OnEnable()
     {
+        InitializeHandler();
         InteractionButton.onClick.AddListener(OnClick);
     }
 
@@ -41,10 +46,15 @@ public class BuildingProductionHandler : BaseInteractable
     #endregion
 
     #region Functions
+    private void InitializeHandler()
+    {
+        BuildingName.SetText(Building.BuildingName);
+        BuildingImage.sprite = Building.BuildingImage;
+    }
+
     private void OnClick()
     {
         BuildingManager.Instance.LastProducedBuilding = Building;
-        PoolingManager.Instance.GetObjectFromPool(ProductionType.Building);
     }
     #endregion
 

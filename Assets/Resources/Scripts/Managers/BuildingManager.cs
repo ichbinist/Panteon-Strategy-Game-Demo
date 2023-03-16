@@ -27,6 +27,10 @@ public class BuildingManager : Singleton<BuildingManager>
     [FoldoutGroup("Config")]
     [ReadOnly]
     public Building LastProducedBuilding;
+
+    [FoldoutGroup("Config")]
+    [ReadOnly]
+    public BuildingController LastClickedBuildingController;
     #endregion
 
     #region Privates
@@ -40,10 +44,12 @@ public class BuildingManager : Singleton<BuildingManager>
     #region Events
     public Action<BuildingAffinityType> OnBuildingAdded;
     public Action<BuildingAffinityType> OnBuildingRemoved;
+
+    public Action<Building> OnBuildingSelected;
     #endregion
 
     #region Monobehaviours
-
+   
     #endregion
 
     #region Functions

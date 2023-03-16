@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
+using Systems.Grid;
 
 ///INFO
 ///->Usage of UnitController script: 
 ///ENDINFO
 
-public class UnitController : MonoBehaviour
+public class UnitController : MonoBehaviour, ISlotable
 {
     #region Publics
     [FoldoutGroup("Data")]
@@ -15,6 +16,11 @@ public class UnitController : MonoBehaviour
     [FoldoutGroup("Data")]
     [ReadOnly]
     public bool IsInitialized = false;
+    [FoldoutGroup("Data")]
+    [ReadOnly]
+    [ShowInInspector]
+    public List<Cell> AllocatedCells;
+
     [FoldoutGroup("References")]
     public SpriteRenderer SpriteRenderer;
     #endregion
@@ -38,6 +44,8 @@ public class UnitController : MonoBehaviour
         PoolingManager.Instance.OnObjectProduced += OnProduced;
         PoolingManager.Instance.OnObjectRecycled += OnRecycle;
         PoolingManager.Instance.OnObjectReturned += OnReturned;
+
+        UnitManager.Instance.OnUnitAdded += AllocateCells;
     }
 
     private void OnDisable()
@@ -48,6 +56,20 @@ public class UnitController : MonoBehaviour
             PoolingManager.Instance.OnObjectRecycled -= OnRecycle;
             PoolingManager.Instance.OnObjectReturned -= OnReturned;
         }
+
+        if (UnitManager.Instance)
+        {
+            UnitManager.Instance.OnUnitAdded -= AllocateCells;
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        if(AllocatedCells != null && AllocatedCells.Count != 0)
+        {
+            Gizmos.DrawSphere(AllocatedCells[0].CellPosition, 0.2f);
+        }
     }
     #endregion
 
@@ -57,6 +79,8 @@ public class UnitController : MonoBehaviour
     public void Death()
     {
         PoolingManager.Instance.ReturnObjectToPool(ProductionType.Unit, gameObject);
+        UnitManager.Instance.RemoveUnit(Unit);
+        ReleaseCells();
     }
 
     private void OnRecycle(GameObject recycledObject)
@@ -99,5 +123,30 @@ public class UnitController : MonoBehaviour
         SpriteRenderer.sprite = null;
         localHealth = 0;
     }
+
+    public void GetDamage(int damage)
+    {
+        
+    }
+
+    private void AllocateCells(UnitAffinityType unitAffinityType)
+    {
+        AllocatedCells = new List<Systems.Grid.Cell>();
+
+        Cell searchingCell = GridManager.Instance.Grid.GetCellByPosition(transform.position + new Vector3(UnitConversions.UnityLengthToPixel(16), UnitConversions.UnityLengthToPixel(16),0));
+
+        searchingCell.SlottedObject = this;
+        AllocatedCells.Add(searchingCell);
+    }
+
+    public void ReleaseCells()
+    {
+        foreach (Systems.Grid.Cell cell in AllocatedCells)
+        {
+            cell.SlottedObject = null;
+        }
+        AllocatedCells = null;
+    }
+
     #endregion
 }

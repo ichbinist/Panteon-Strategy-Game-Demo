@@ -9,28 +9,58 @@ using Sirenix.OdinInspector;
 
 public class NonDetailedPanel : SubBasePanel
 {
-#region Publics
+    #region Publics
 
-#endregion
+    #endregion
 
-#region Privates
+    #region Privates
 
-#endregion
+    #endregion
 
-#region Cached
+    #region Cached
 
-#endregion
+    #endregion
 
-#region Events
+    #region Events
 
-#endregion
+    #endregion
 
-#region Monobehaviours
+    #region Monobehaviours
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        BuildingManager.Instance.OnBuildingSelected += InitializePanel;
+        if (!BuildingManager.Instance.LastClickedBuildingController.Building.isDetailedInfoBuilding)
+        {
+            InitializePanel(BuildingManager.Instance.LastClickedBuildingController.Building);
+        }
+    }
 
-#endregion
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        if(BuildingManager.Instance)
+            BuildingManager.Instance.OnBuildingSelected -= InitializePanel;
+    }
+    #endregion
 
-#region Functions
+    #region Functions
+    private void InitializePanel(Building building)
+    {
+        if(building == null)
+        {
+            DeactivatePanel();
+            return;
+        }
+        if (building.BuildingInfoType == BuildingInfoType.Non_Detailed)
+        {
+            ActivatePanel();
+        }
+        else
+        {
+            DeactivatePanel();
+        }
 
-#endregion
-
+    }
+    #endregion
 }
