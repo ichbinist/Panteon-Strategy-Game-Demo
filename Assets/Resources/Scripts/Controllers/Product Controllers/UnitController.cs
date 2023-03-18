@@ -46,6 +46,8 @@ public class UnitController : MonoBehaviour, ISlotable
         PoolingManager.Instance.OnObjectReturned += OnReturned;
 
         UnitManager.Instance.OnUnitAdded += AllocateCells;
+
+        ClickManager.Instance.OnClickWorld.AddListener(UnitSelection);
     }
 
     private void OnDisable()
@@ -60,6 +62,11 @@ public class UnitController : MonoBehaviour, ISlotable
         if (UnitManager.Instance)
         {
             UnitManager.Instance.OnUnitAdded -= AllocateCells;
+        }
+
+        if (ClickManager.Instance)
+        {
+            ClickManager.Instance.OnClickWorld.RemoveListener(UnitSelection);
         }
     }
 
@@ -146,6 +153,24 @@ public class UnitController : MonoBehaviour, ISlotable
             cell.SlottedObject = null;
         }
         AllocatedCells = null;
+    }
+
+    public void UnitSelection(Vector2 clickPosition, MouseClickType mouseClickType)
+    {
+        if (mouseClickType == MouseClickType.Left)
+        {
+            Cell clickedCell = GridManager.Instance.Grid.GetCellByPosition(Camera.main.ScreenToWorldPoint(clickPosition));
+            if (clickedCell == null)
+            {
+                UnitManager.Instance.LastClickedUnit = null;
+                UnitManager.Instance.OnUnitSelected.Invoke(null);
+            }
+            else if (AllocatedCells.Contains(clickedCell))
+            {
+                UnitManager.Instance.LastClickedUnit = this;
+                UnitManager.Instance.OnUnitSelected.Invoke(Unit);
+            }
+        }
     }
 
     #endregion
