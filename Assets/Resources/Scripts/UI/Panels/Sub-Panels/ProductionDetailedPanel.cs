@@ -36,7 +36,7 @@ public class ProductionDetailedPanel : SubBasePanel
     {
         base.OnEnable();
         BuildingManager.Instance.OnBuildingSelected += InitializePanel;
-        if (BuildingManager.Instance.LastClickedBuildingController.Building.isDetailedInfoBuilding)
+        if (BuildingManager.Instance.LastClickedBuildingController != null && BuildingManager.Instance.LastClickedBuildingController.Building.isDetailedInfoBuilding)
         {
             InitializePanel(BuildingManager.Instance.LastClickedBuildingController.Building);
         }

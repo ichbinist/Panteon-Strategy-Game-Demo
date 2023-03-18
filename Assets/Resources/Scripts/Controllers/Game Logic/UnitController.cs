@@ -20,6 +20,10 @@ public class UnitController : MonoBehaviour, ISlotable
     [ReadOnly]
     [ShowInInspector]
     public List<Cell> AllocatedCells;
+    [FoldoutGroup("Data")]
+    [ReadOnly]
+    [ShowInInspector]
+    public Cell CurrentCell;
 
     [FoldoutGroup("References")]
     public SpriteRenderer SpriteRenderer;
@@ -141,6 +145,21 @@ public class UnitController : MonoBehaviour, ISlotable
         AllocatedCells = new List<Systems.Grid.Cell>();
 
         Cell searchingCell = GridManager.Instance.Grid.GetCellByPosition(transform.position + new Vector3(UnitConversions.UnityLengthToPixel(16), UnitConversions.UnityLengthToPixel(16),0));
+
+        CurrentCell = searchingCell;
+
+        searchingCell.SlottedObject = this;
+        AllocatedCells.Add(searchingCell);
+    }
+    
+    
+    public void ReallocateCells()
+    {
+        AllocatedCells = new List<Systems.Grid.Cell>();
+
+        Cell searchingCell = GridManager.Instance.Grid.GetCellByPosition(transform.position + new Vector3(UnitConversions.UnityLengthToPixel(16), UnitConversions.UnityLengthToPixel(16),0));
+
+        CurrentCell = searchingCell;
 
         searchingCell.SlottedObject = this;
         AllocatedCells.Add(searchingCell);
