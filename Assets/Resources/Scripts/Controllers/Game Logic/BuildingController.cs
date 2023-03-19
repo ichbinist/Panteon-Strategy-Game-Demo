@@ -27,6 +27,7 @@ public class BuildingController : MonoBehaviour, ISlotable
     public List<Cell> AllocatedCells;
 
     [FoldoutGroup("Building Settings")]
+    [SerializeField]
     public Vector2 ProductionLocation;
     #endregion
 

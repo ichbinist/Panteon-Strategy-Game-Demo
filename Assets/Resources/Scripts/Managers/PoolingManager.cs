@@ -35,17 +35,18 @@ public class PoolingManager : Singleton<PoolingManager>
     [Button]
     private void OnEnable()
     {
-        InitializePools();
+        InitializeBuildingPools();
     }
     #endregion
 
     #region Functions
-    private void InitializePools()
+    private void InitializeBuildingPools()
     {
-        foreach (ProductionType productionType in Enum.GetValues(typeof(ProductionType)))
-        {
-            PoolDictionary.Add(productionType, new Pool(productionType, DefaultObjectPoolSize));
-        }
+        PoolDictionary.Add(ProductionType.Building, new Pool(ProductionType.Building, DefaultObjectPoolSize));
+    }
+    public void InitializeUnitPools()
+    {
+        PoolDictionary.Add(ProductionType.Unit, new Pool(ProductionType.Unit, DefaultObjectPoolSize));
     }
 
     public GameObject GetObjectFromPool(ProductionType productionType)

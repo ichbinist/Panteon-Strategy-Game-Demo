@@ -66,6 +66,10 @@ public class UnitProductionHandler : BaseInteractable
     {
         if (targetCell.IsEmpty)
         {
+            if(PoolingManager.Instance.PoolDictionary.ContainsKey(ProductionType.Unit) == false)
+            {
+                PoolingManager.Instance.InitializeUnitPools();
+            }
             GameObject unitGameObject = PoolingManager.Instance.GetObjectFromPool(ProductionType.Unit);
             unitGameObject.transform.position = targetCell.CellPosition;
             UnitManager.Instance.AddUnit(Unit);

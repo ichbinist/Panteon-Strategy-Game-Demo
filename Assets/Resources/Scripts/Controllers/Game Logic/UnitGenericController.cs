@@ -8,6 +8,7 @@ using Systems.Grid;
 ///->Usage of UnitController script: 
 ///ENDINFO
 
+[System.Serializable]
 public class UnitGenericController : MonoBehaviour, ISlotable
 {
     #region Publics
@@ -89,9 +90,10 @@ public class UnitGenericController : MonoBehaviour, ISlotable
     [Button]
     public void Death()
     {
-        PoolingManager.Instance.ReturnObjectToPool(ProductionType.Unit, gameObject);
-        UnitManager.Instance.RemoveUnit(Unit);
         ReleaseCells();
+        Unit unit = Unit;
+        UnitManager.Instance.RemoveUnit(unit);
+        PoolingManager.Instance.ReturnObjectToPool(ProductionType.Unit, gameObject);
     }
 
     private void OnRecycle(GameObject recycledObject)
@@ -172,11 +174,14 @@ public class UnitGenericController : MonoBehaviour, ISlotable
 
     public void ReleaseCells()
     {
-        foreach (Systems.Grid.Cell cell in AllocatedCells)
+        if(AllocatedCells != null)
         {
-            cell.SlottedObject = null;
+            foreach (Systems.Grid.Cell cell in AllocatedCells)
+            {
+                cell.SlottedObject = null;
+            }
+            AllocatedCells = null;
         }
-        AllocatedCells = null;
     }
 
     public void UnitSelection(Vector2 clickPosition, MouseClickType mouseClickType)

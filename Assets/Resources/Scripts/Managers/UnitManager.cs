@@ -60,8 +60,11 @@ public class UnitManager : Singleton<UnitManager>
 
     public void RemoveUnit(Unit unit)
     {
-        OnUnitRemoved.Invoke(unit.UnitAffinityType);
-        ProducedUnits.Remove(unit);
+        if(unit != null && OnUnitRemoved != null)
+        {
+            OnUnitRemoved.Invoke(unit.UnitAffinityType);
+            ProducedUnits.Remove(unit);
+        }
     }
     #endregion
 
