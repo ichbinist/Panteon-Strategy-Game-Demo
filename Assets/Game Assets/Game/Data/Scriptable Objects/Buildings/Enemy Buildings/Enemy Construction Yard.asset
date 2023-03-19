@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c57b3ef5d4a11514e911b649858be07f, type: 3}
+  m_Name: Enemy Construction Yard
+  m_EditorClassIdentifier: 
+  BuildingInfoType: 1
+  BuildingAffinityType: 1
+  BuildingSize: {x: 4, y: 4}
+  BuildingName: "Construct\u0131on Yard"
+  BuildingImage: {fileID: 21300000, guid: 86c073eeef7737741bd8ea3397533e96, type: 3}
+  ProduceableUnits: []
+  Health: 80

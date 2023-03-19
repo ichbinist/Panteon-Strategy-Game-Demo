@@ -64,16 +64,6 @@ public class BuildingController : MonoBehaviour, ISlotable
             ClickManager.Instance.OnClickWorld.RemoveListener(BuildingSelection);
         }
     }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-#if UNITY_EDITOR
-        if(Application.isPlaying)
-            Gizmos.DrawSphere(GridManager.Instance.Grid.GetCellByPosition(AllocatedCells[0].CellPosition + ProductionLocation).CellPosition, 0.3f);
-#endif
-    }
-
     #endregion
 
     #region Functions
@@ -184,7 +174,12 @@ public class BuildingController : MonoBehaviour, ISlotable
 
     public void GetDamage(int damage)
     {
-        
+        localHealth -= damage;
+
+        if (localHealth <= 0)
+        {
+            Death();
+        }
     }
 
     public void BuildingSelection(Vector2 clickPosition, MouseClickType mouseClickType)

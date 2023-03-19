@@ -30,7 +30,7 @@ public class UnitManager : Singleton<UnitManager>
     public Unit LastProducedUnit;
     [FoldoutGroup("Config")]
     [ReadOnly]
-    public UnitController LastClickedUnit;
+    public UnitGenericController LastClickedUnit;
     #endregion
 
     #region Privates

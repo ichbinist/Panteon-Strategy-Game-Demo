@@ -7,7 +7,7 @@ using Sirenix.OdinInspector;
 ///->Usage of UnitFactory script: 
 ///ENDINFO
 
-public class UnitFactory : GenericFactory<UnitController>
+public class UnitFactory : GenericFactory<UnitGenericController>
 {
     #region Publics
 

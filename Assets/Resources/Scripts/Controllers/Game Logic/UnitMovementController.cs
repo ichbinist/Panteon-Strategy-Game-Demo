@@ -12,7 +12,9 @@ public class UnitMovementController : MonoBehaviour
     #region Publics
     [FoldoutGroup("Unit Movement Settings")]
     public float UnitSpeed = 5f;
-    public UnitController UnitController;
+    public UnitGenericController UnitController;
+
+    public bool IsSelected;
     #endregion
 
     #region Privates
@@ -22,8 +24,6 @@ public class UnitMovementController : MonoBehaviour
 
     [ReadOnly]
     private Cell targetCell;
-
-    private bool isSelected;
     #endregion
 
     #region Cached
@@ -122,23 +122,26 @@ public class UnitMovementController : MonoBehaviour
 
         if(clickedCell == null)
         {
-            isSelected = false;
+            IsSelected = false;
             UnitManager.Instance.LastClickedUnit = null;
             return;
         }
-
-        if(clickedCell.IsEmpty == false && clickedCell == UnitController.CurrentCell)
+        if (clickType == MouseClickType.Left)
         {
-            isSelected = true;
+            //Select Command
+            if (clickedCell.IsEmpty == false && clickedCell == UnitController.CurrentCell)
+            {
+                IsSelected = true;
+            }
+            else if(clickedCell.IsEmpty == false)
+            {
+                IsSelected = false;
+            }
         }
-        else if(clickedCell.IsEmpty == false)
+        else if(clickType == MouseClickType.Right)
         {
-            isSelected = false;
-        }
-
-        if (isSelected && UnitManager.Instance.LastClickedUnit == UnitController)
-        {
-            if (clickType == MouseClickType.Left)
+            //Move Command
+            if (IsSelected && UnitManager.Instance.LastClickedUnit == UnitController)
             {
                 targetCell = GridManager.Instance.Grid.GetCellByPosition(Camera.main.ScreenToWorldPoint(clickPosition));
                 if (targetCell != null && targetCell.IsEmpty)
@@ -150,7 +153,7 @@ public class UnitMovementController : MonoBehaviour
         }
     }
 
-    public List<Cell> FindPath(Cell startNode, Cell goalNode)
+    public List<Cell> FindPath(Cell startCell, Cell goalCell)
     {
         List<Cell> openSet = new List<Cell>();
         HashSet<Cell> closedSet = new HashSet<Cell>();
@@ -158,16 +161,16 @@ public class UnitMovementController : MonoBehaviour
         Dictionary<Cell, float> gScore = new Dictionary<Cell, float>();
         Dictionary<Cell, float> fScore = new Dictionary<Cell, float>();
 
-        gScore[startNode] = 0f;
-        fScore[startNode] = HeuristicCostEstimate(startNode, goalNode);
-        openSet.Add(startNode);
+        gScore[startCell] = 0f;
+        fScore[startCell] = CostEstimate(startCell, goalCell);
+        openSet.Add(startCell);
 
         while (openSet.Count > 0)
         {
-            Cell current = GetLowestFScoreNode(openSet, fScore);
-            if (current == goalNode)
+            Cell current = GetLowestFScoreCell(openSet, fScore);
+            if (current == goalCell)
             {
-                return ReconstructPath(cameFrom, current, startNode);
+                return ReconstructPath(cameFrom, current, startCell);
             }
 
             openSet.Remove(current);
@@ -185,7 +188,7 @@ public class UnitMovementController : MonoBehaviour
                 {
                     cameFrom[neighbor] = current;
                     gScore[neighbor] = tentativeGScore;
-                    fScore[neighbor] = tentativeGScore + HeuristicCostEstimate(neighbor, goalNode);
+                    fScore[neighbor] = tentativeGScore + CostEstimate(neighbor, goalCell);
 
                     if (!openSet.Contains(neighbor) && neighbor.IsEmpty)
                     {
@@ -198,17 +201,12 @@ public class UnitMovementController : MonoBehaviour
         return null;
     }
 
-    private float HeuristicCostEstimate(Cell fromNode, Cell toNode)
+    private float CostEstimate(Cell fromCell, Cell toCell)
     {
-        return Vector3.Distance(fromNode.CellPosition, toNode.CellPosition);
+        return Vector3.Distance(fromCell.CellPosition, toCell.CellPosition);
     }
 
-    private float CostEstimate(Cell fromNode, Cell toNode)
-    {
-        return Vector3.Distance(fromNode.CellPosition, toNode.CellPosition);
-    }
-
-    private List<Cell> ReconstructPath(Dictionary<Cell, Cell> cameFrom, Cell current, Cell startNode)
+    private List<Cell> ReconstructPath(Dictionary<Cell, Cell> cameFrom, Cell current, Cell startCell)
     {
         List<Cell> totalPath = new List<Cell>();
         totalPath.Add(current);
@@ -217,29 +215,29 @@ public class UnitMovementController : MonoBehaviour
         {
             current = cameFrom[current];
 
-            if(current != startNode)
+            if(current != startCell)
                 totalPath.Insert(0, current);
         }
 
         return totalPath;
     }
 
-    private Cell GetLowestFScoreNode(List<Cell> openSet, Dictionary<Cell, float> fScore)
+    private Cell GetLowestFScoreCell(List<Cell> openSet, Dictionary<Cell, float> fScore)
     {
-        Cell lowestNode = openSet[0];
-        float lowestScore = fScore[lowestNode];
+        Cell lowestCell = openSet[0];
+        float lowestScore = fScore[lowestCell];
 
         for (int i = 1; i < openSet.Count; i++)
         {
-            Cell node = openSet[i];
-            if (fScore[node] < lowestScore)
+            Cell cell = openSet[i];
+            if (fScore[cell] < lowestScore)
             {
-                lowestNode = node;
-                lowestScore = fScore[node];
+                lowestCell = cell;
+                lowestScore = fScore[cell];
             }
         }
 
-        return lowestNode;
+        return lowestCell;
     }
     #endregion
 }

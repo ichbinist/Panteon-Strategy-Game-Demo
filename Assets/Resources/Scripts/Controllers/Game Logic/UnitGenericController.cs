@@ -8,7 +8,7 @@ using Systems.Grid;
 ///->Usage of UnitController script: 
 ///ENDINFO
 
-public class UnitController : MonoBehaviour, ISlotable
+public class UnitGenericController : MonoBehaviour, ISlotable
 {
     #region Publics
     [FoldoutGroup("Data")]
@@ -137,7 +137,12 @@ public class UnitController : MonoBehaviour, ISlotable
 
     public void GetDamage(int damage)
     {
-        
+        localHealth -= damage;
+
+        if(localHealth <= 0)
+        {
+            Death();
+        }
     }
 
     private void AllocateCells(UnitAffinityType unitAffinityType)
