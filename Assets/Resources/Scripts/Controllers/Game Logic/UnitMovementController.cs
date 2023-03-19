@@ -90,6 +90,10 @@ public class UnitMovementController : MonoBehaviour
                 ResetPosition(currentNode, true);
                 path = FindPath(UnitController.CurrentCell, targetCell);
             }
+            else
+            {
+                ResetPosition(currentNode, true);
+            }
             return;
         }
 
@@ -115,6 +119,13 @@ public class UnitMovementController : MonoBehaviour
     public void ClickControl(Vector2 clickPosition, MouseClickType clickType)
     {
         Cell clickedCell = GridManager.Instance.Grid.GetCellByPosition(Camera.main.ScreenToWorldPoint(clickPosition));
+
+        if(clickedCell == null)
+        {
+            isSelected = false;
+            UnitManager.Instance.LastClickedUnit = null;
+            return;
+        }
 
         if(clickedCell.IsEmpty == false && clickedCell == UnitController.CurrentCell)
         {
