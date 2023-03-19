@@ -28,6 +28,9 @@ public class UnitManager : Singleton<UnitManager>
     [FoldoutGroup("Config")]
     [ReadOnly]
     public Unit LastProducedUnit;
+    [FoldoutGroup("Config")]
+    [ReadOnly]
+    public UnitGenericController LastClickedUnit;
     #endregion
 
     #region Privates
@@ -41,6 +44,7 @@ public class UnitManager : Singleton<UnitManager>
     #region Events
     public Action<UnitAffinityType> OnUnitAdded;
     public Action<UnitAffinityType> OnUnitRemoved;
+    public Action<Unit> OnUnitSelected;
     #endregion
 
     #region Monobehaviours

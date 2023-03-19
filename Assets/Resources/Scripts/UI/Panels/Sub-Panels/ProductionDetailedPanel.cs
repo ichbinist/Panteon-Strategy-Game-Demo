@@ -36,10 +36,12 @@ public class ProductionDetailedPanel : SubBasePanel
     {
         base.OnEnable();
         BuildingManager.Instance.OnBuildingSelected += InitializePanel;
-        if (BuildingManager.Instance.LastClickedBuildingController.Building.isDetailedInfoBuilding)
+        if (BuildingManager.Instance.LastClickedBuildingController != null && BuildingManager.Instance.LastClickedBuildingController.Building.isDetailedInfoBuilding)
         {
             InitializePanel(BuildingManager.Instance.LastClickedBuildingController.Building);
         }
+
+        UnitManager.Instance.OnUnitSelected += UnitSelectionHandle;
     }
 
     protected override void OnDisable()
@@ -47,10 +49,18 @@ public class ProductionDetailedPanel : SubBasePanel
         base.OnDisable();
         if (BuildingManager.Instance)
             BuildingManager.Instance.OnBuildingSelected -= InitializePanel;
+
+        if(UnitManager.Instance)
+            UnitManager.Instance.OnUnitSelected -= UnitSelectionHandle;
     }
     #endregion
 
     #region Functions
+    private void UnitSelectionHandle(Unit unit)
+    {
+        DeactivatePanel();
+    }
+
     private void InitializePanel(Building building)
     {
         if (building == null)

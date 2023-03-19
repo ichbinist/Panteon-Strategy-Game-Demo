@@ -8,7 +8,7 @@ using Systems.Grid;
 ///->Usage of UnitController script: 
 ///ENDINFO
 
-public class UnitController : MonoBehaviour, ISlotable
+public class UnitGenericController : MonoBehaviour, ISlotable
 {
     #region Publics
     [FoldoutGroup("Data")]
@@ -20,6 +20,10 @@ public class UnitController : MonoBehaviour, ISlotable
     [ReadOnly]
     [ShowInInspector]
     public List<Cell> AllocatedCells;
+    [FoldoutGroup("Data")]
+    [ReadOnly]
+    [ShowInInspector]
+    public Cell CurrentCell;
 
     [FoldoutGroup("References")]
     public SpriteRenderer SpriteRenderer;
@@ -46,6 +50,8 @@ public class UnitController : MonoBehaviour, ISlotable
         PoolingManager.Instance.OnObjectReturned += OnReturned;
 
         UnitManager.Instance.OnUnitAdded += AllocateCells;
+
+        ClickManager.Instance.OnClickWorld.AddListener(UnitSelection);
     }
 
     private void OnDisable()
@@ -60,6 +66,11 @@ public class UnitController : MonoBehaviour, ISlotable
         if (UnitManager.Instance)
         {
             UnitManager.Instance.OnUnitAdded -= AllocateCells;
+        }
+
+        if (ClickManager.Instance)
+        {
+            ClickManager.Instance.OnClickWorld.RemoveListener(UnitSelection);
         }
     }
 
@@ -126,7 +137,12 @@ public class UnitController : MonoBehaviour, ISlotable
 
     public void GetDamage(int damage)
     {
-        
+        localHealth -= damage;
+
+        if(localHealth <= 0)
+        {
+            Death();
+        }
     }
 
     private void AllocateCells(UnitAffinityType unitAffinityType)
@@ -134,6 +150,21 @@ public class UnitController : MonoBehaviour, ISlotable
         AllocatedCells = new List<Systems.Grid.Cell>();
 
         Cell searchingCell = GridManager.Instance.Grid.GetCellByPosition(transform.position + new Vector3(UnitConversions.UnityLengthToPixel(16), UnitConversions.UnityLengthToPixel(16),0));
+
+        CurrentCell = searchingCell;
+
+        searchingCell.SlottedObject = this;
+        AllocatedCells.Add(searchingCell);
+    }
+    
+    
+    public void ReallocateCells()
+    {
+        AllocatedCells = new List<Systems.Grid.Cell>();
+
+        Cell searchingCell = GridManager.Instance.Grid.GetCellByPosition(transform.position + new Vector3(UnitConversions.UnityLengthToPixel(16), UnitConversions.UnityLengthToPixel(16),0));
+
+        CurrentCell = searchingCell;
 
         searchingCell.SlottedObject = this;
         AllocatedCells.Add(searchingCell);
@@ -146,6 +177,24 @@ public class UnitController : MonoBehaviour, ISlotable
             cell.SlottedObject = null;
         }
         AllocatedCells = null;
+    }
+
+    public void UnitSelection(Vector2 clickPosition, MouseClickType mouseClickType)
+    {
+        if (mouseClickType == MouseClickType.Left)
+        {
+            Cell clickedCell = GridManager.Instance.Grid.GetCellByPosition(Camera.main.ScreenToWorldPoint(clickPosition));
+            if (clickedCell == null)
+            {
+                UnitManager.Instance.LastClickedUnit = null;
+                UnitManager.Instance.OnUnitSelected.Invoke(null);
+            }
+            else if (AllocatedCells.Contains(clickedCell))
+            {
+                UnitManager.Instance.LastClickedUnit = this;
+                UnitManager.Instance.OnUnitSelected.Invoke(Unit);
+            }
+        }
     }
 
     #endregion

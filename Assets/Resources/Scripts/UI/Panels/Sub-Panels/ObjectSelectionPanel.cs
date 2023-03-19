@@ -36,6 +36,7 @@ public class ObjectSelectionPanel : SubBasePanel
     {
         base.OnEnable();
         BuildingManager.Instance.OnBuildingSelected += BuildingSelection;
+        UnitManager.Instance.OnUnitSelected += UnitSelection;
     }
 
     protected override void OnDisable()
@@ -43,6 +44,8 @@ public class ObjectSelectionPanel : SubBasePanel
         base.OnDisable();
         if(BuildingManager.Instance)
             BuildingManager.Instance.OnBuildingSelected -= BuildingSelection;
+        if(UnitManager.Instance)
+            UnitManager.Instance.OnUnitSelected -= UnitSelection;
     }
     #endregion
 
@@ -63,6 +66,30 @@ public class ObjectSelectionPanel : SubBasePanel
             localBuilding = null;
 
             if (localUnit == null)
+            {
+                DeactivatePanel();
+                InformationImage.enabled = false;
+                InformationText.enabled = false;
+            }
+        }
+    }
+
+    private void UnitSelection(Unit unit)
+    {
+        if (unit != null)
+        {
+            ActivatePanel();
+            InformationImage.enabled = true;
+            InformationText.enabled = true;
+            InformationImage.sprite = unit.UnitImage;
+            InformationText.SetText(unit.UnitName);
+            localUnit = unit;
+        }
+        else
+        {
+            unit = null;
+
+            if (localBuilding == null)
             {
                 DeactivatePanel();
                 InformationImage.enabled = false;
